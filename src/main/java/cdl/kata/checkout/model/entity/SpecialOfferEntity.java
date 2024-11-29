@@ -19,7 +19,6 @@ public class SpecialOfferEntity {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal unitPrice;
     private Long specialQuantity;
     private BigDecimal specialPrice;
 }
