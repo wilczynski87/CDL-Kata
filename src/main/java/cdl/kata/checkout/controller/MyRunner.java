@@ -34,8 +34,8 @@ public class MyRunner implements CommandLineRunner {
         // Scanner scanner = new Scanner(System.in);
 
         System.out.println("Hello in Checkout: ");
-        System.out.println("If you wish for: begin adding products to basket, press '1'");
-        System.out.println("If you wish for: adding pricing rules, press '2'");
+        System.out.println("If you wish for: adding pricing rules, press '1'");
+        System.out.println("If you wish for: begin adding products to basket, press '2'");
         System.out.println("For exit put 'x'");
 
         // String choice = scanner.nextLi1ne();

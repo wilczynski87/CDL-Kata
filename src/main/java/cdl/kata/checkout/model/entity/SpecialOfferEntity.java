@@ -21,4 +21,11 @@ public class SpecialOfferEntity {
     private Long id;
     private Long specialQuantity;
     private BigDecimal specialPrice;
+
+
+    @Override
+    public String toString() {
+        return String.format("%s for %s", specialQuantity, specialPrice.toString());
+    }
+
 }

@@ -1,5 +1,6 @@
 package cdl.kata.checkout.service;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 import org.springframework.stereotype.Service;
@@ -35,8 +36,29 @@ public class ReadingInput {
                 return productService.findProduct(sku);
             } else {
                 System.out.println("Sorry, product with given name, do not exist :-(");
+            }  
+        }
+    }
+
+    public Long checkQuantity() {
+        while(true) {
+            String quantity = scanner.nextLine();
+            try {
+                return Long.valueOf(quantity);
+            } catch (NumberFormatException e) {
+                System.out.println("Sorry I did not catch that: '" + quantity + "', please put quantity again...");
             }
-                
+        }
+    }
+
+    public BigDecimal checkPrice() {
+        while(true) {
+            String price = scanner.nextLine();
+            try {
+                return BigDecimal.valueOf(Double.valueOf(price));
+            } catch (NumberFormatException e) {
+                System.out.println("Sorry I did not catch that: '" + price + "', please put price again...");
+            }
         }
     }
 
