@@ -41,10 +41,14 @@ public class MainService {
 
     private void addSpecialOffer() {
         while(true) {
-            System.out.println("Please choose, to which product, you want to add special pricing, by clicking providing 'SKU.");
+            System.out.println("Please choose, to which product, you want to add special pricing, by writing provided 'SKU'.");
             printingOutput.printProducts(productService.getAllProducts());
-            System.out.println("Choose product?: ");
+            System.out.println("Choose product, or put 'X' for Exit: ");
             String productSKU = readingInput.checkSKU();
+            if(productSKU.equals("X")) {
+                System.out.println("Now we are proceeding to checkout, please choose a product.");
+                return;
+            }
 
             System.out.println("For how many products (quantity)?: ");
             Long quantity = readingInput.checkQuantity();
@@ -61,16 +65,15 @@ public class MainService {
 
                 var productCheck = productService.checkProduct(productSKU);
 
-                if(productCheck) {
+                if(Boolean.TRUE.equals(productCheck)) {
                     var forUpdate = productService.findProduct(productSKU);
                     var specialOffer = specialOfferService.createSpecialOffer(quantity, price);
-                    // forUpdate.setId(quantity);
                     forUpdate.setSpecialOffer(specialOffer);
                     productService.updateSpecialOffer(forUpdate);
                     printingOutput.printProducts(productService.getAllProducts());
                     System.out.println("put '1' for product list, '2' for adding special offer or exit by clicking 'x'!");
                     return;
-                } else System.out.println("Sorry, there is no such product..., try again :-)");
+                } else System.out.println("Sorry, there is no such product like: '" + answer + "'..., try again :-)");
             }
         }
     }
@@ -79,13 +82,18 @@ public class MainService {
         printingOutput.printProducts(productService.getAllProducts());
         System.out.println("To choose one, write item SKU and press Enter. (for example: A)");
         System.out.println("Basket can only take 1 item at the time!");
+        System.out.println("You can end scanning by puting 'X'");
         
         while(true) {
             String sku = readingInput.checkSKU();
-            if(sku.equals("X")) return;
+            if(sku.equals("X")) {
+                System.out.println("Your final ricip is: ");
+                printingOutput.printRecipe(cartService.getCart());
+                return;
+            }
             ProductEntity product = readingInput.checkProduct(sku);
             var cart = cartService.addToCart(product);
-            printingOutput.printRecip(cart);
+            printingOutput.printRecipe(cart);
             System.out.println("Add another product, or put 'x' to EXIT");
         }
     }

@@ -14,6 +14,7 @@ public class ProductService {
 
     private final ProductEntityRepo productEntityRepo;
 
+    // checking if product is in database
     public Boolean checkProduct(String productSKU) {
         return productEntityRepo.existsBySku(productSKU);
     }
@@ -26,6 +27,7 @@ public class ProductService {
         return product.getFirst();
     }
 
+    // updating special dicount/price rule
     public ProductEntity updateSpecialOffer(ProductEntity product) {
 
         var forUpdate = findProduct(product.getSku());

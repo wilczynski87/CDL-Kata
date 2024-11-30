@@ -21,11 +21,11 @@ public class PrintingOutput {
     }
 
     private String printProduct(ProductEntity product) {
-        String productOutput = "SKU: %s, Unit Price (pence): %s, Special Price (pence): %s";
+        String productOutput = "SKU: %s, Unit Price (pence): %s, Price (pence): %s";
         return String.format(productOutput, product.getSku(), product.getPrice().toString(), product.getSpecialOffer());
     }
 
-    public void printRecip(Map<String, List<ProductEntity>> cart) {
+    public void printRecipe(Map<String, List<ProductEntity>> cart) {
         System.out.println("Current receipt: ");
         cart.forEach((key, products) -> {
             System.out.println(

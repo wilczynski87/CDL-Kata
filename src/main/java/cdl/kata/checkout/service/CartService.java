@@ -17,8 +17,10 @@ public class CartService {
 
     private final ProductService productService;
 
+    // cart for products
     private Map<String, List<ProductEntity>> cart = new HashMap<>();
 
+    //clear cart and create a map for new one
     public void cleanCart() {
         this.cart.clear();
         productService.getAllProducts().stream()
@@ -26,11 +28,13 @@ public class CartService {
             .forEach(sku -> cart.put(sku, new ArrayList<>()));
     }
 
+    // adding product to the cart
     public Map<String, List<ProductEntity>> addToCart(ProductEntity product) {
         this.cart.get(product.getSku()).add(product);
         return this.cart;
     }
 
+    // calculating price for all products, with these same SKU
     public static BigDecimal calculateProductList(List<ProductEntity> productList) {
         // checking if there is any product of given type
         var productCount = productList.size();
@@ -44,7 +48,7 @@ public class CartService {
 
         Long denominator;
         BigDecimal specialPrice;
-        // checking special price
+        // checking special price quatity
         if(productList.getFirst().getSpecialOffer().getSpecialQuantity() == null 
             || productList.getFirst().getSpecialOffer().getSpecialQuantity() == 0l
         ) return BigDecimal.ZERO;
@@ -53,18 +57,23 @@ public class CartService {
 
         var specialSumMeter = productCount / denominator;
 
+        // checking special price, price
         if(productList.getFirst().getSpecialOffer().getSpecialPrice() == null) {
             specialPrice = productList.getFirst().getPrice();
         } else specialPrice = productList.getFirst().getSpecialOffer().getSpecialPrice();
 
         var divisionLeftouverMeter = productCount % denominator;
 
+        // calculating all products for special price discount
         var specialSum = specialPrice.multiply(BigDecimal.valueOf(specialSumMeter));
+        // calculating products for regular price
         var divisionLeftouver = regularPrice.multiply(BigDecimal.valueOf(divisionLeftouverMeter));
 
+        // returing results
         return specialSum.add(divisionLeftouver);
     }
 
+    // calculate the sum of all product
     public static BigDecimal calculateWhole(Map<String, List<ProductEntity>> cart) {
         
         return cart.keySet().stream()

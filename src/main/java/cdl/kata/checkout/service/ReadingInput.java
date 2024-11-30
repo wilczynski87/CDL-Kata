@@ -15,12 +15,13 @@ public class ReadingInput {
     private final ProductService productService;
     private final Scanner scanner = new Scanner(System.in);
 
+    // checking if SKU privided by user is correct
     public String checkSKU() {
         while(true) {
             String productSku = scanner.nextLine();
-            if(productService.checkProduct(productSku.trim().toUpperCase())) {
+            if(Boolean.TRUE.equals(productService.checkProduct(productSku.trim().toUpperCase()))) {
                 return productSku.trim().toUpperCase();
-            } else if(productSku.trim().toUpperCase().equals("X")) {
+            } else if(productSku.trim().equalsIgnoreCase("x")) {
                 return "X";
             } else {
                 System.out.println("I do not have these product: " + productSku);
@@ -29,10 +30,11 @@ public class ReadingInput {
         }
     }
 
+    // checking if product privided by user is in database
     public ProductEntity checkProduct(String sku) {
         while(true) {
             var check = productService.checkProduct(sku);
-            if(check) {
+            if(Boolean.TRUE.equals(check)) {
                 return productService.findProduct(sku);
             } else {
                 System.out.println("Sorry, product with given name, do not exist :-(");
@@ -40,6 +42,7 @@ public class ReadingInput {
         }
     }
 
+    // checking if quantity privided by user is correct
     public Long checkQuantity() {
         while(true) {
             String quantity = scanner.nextLine();
@@ -51,6 +54,7 @@ public class ReadingInput {
         }
     }
 
+    // checking if price privided by user is correct
     public BigDecimal checkPrice() {
         while(true) {
             String price = scanner.nextLine();

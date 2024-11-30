@@ -25,7 +25,7 @@ public class SpecialOfferEntity {
 
     @Override
     public String toString() {
-        return String.format("%s for %s", specialQuantity, specialPrice.toString());
+        return String.format("Special Price: %s for %s", specialQuantity, specialPrice.toString());
     }
 
 }
